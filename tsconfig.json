@@ -3,15 +3,13 @@
     "target": "ES6",
     "sourceMap": true,
     "outDir": "build",
-    "rootDir": "src",
+    "rootDir": ".",
     "strict": true,
     "lib": ["ESNext"],
     "noImplicitAny": true,
     "moduleResolution": "Node",
     "module": "CommonJS",
-    "esModuleInterop": true,
-    "baseUrl": "src",
-    "paths": {}
+    "esModuleInterop": true
   },
   "include": ["src/**/*"]
 }

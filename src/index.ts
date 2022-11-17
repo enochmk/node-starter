@@ -1,10 +1,12 @@
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
-
+import configureLogger from './modules/loggers/logger';
 import routes from './routes';
 
 // provide access to environmental variables
 dotenv.config();
+
+const logger = configureLogger('App');
 
 // initialize node application
 const app: Express = express();
@@ -16,5 +18,5 @@ app.use(routes);
 
 // start server
 app.listen(PORT, () => {
-  console.log(`Server running in mode: ${NODE_ENV} on port: ${PORT}`);
+  logger.info(`Server running in mode: ${NODE_ENV} on port: ${PORT}`);
 });

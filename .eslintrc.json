@@ -21,7 +21,8 @@
   "rules": {
     "camelcase": "error",
     "spaced-comment": "error",
-    "no-duplicate-imports": "error"
+    "no-duplicate-imports": "error",
+    "no-console": "error"
   },
   "settings": {
     "import/resolver": {
