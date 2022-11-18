@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
-
 import routes from './routes';
 
 // provide access to environmental variables
