@@ -1,7 +1,14 @@
-import config from 'config';
 import winston, { format } from 'winston';
 
-const level = config.get('logger.level') as string;
+const config = {
+  console: true,
+  service: 'Starter-service',
+  level: `${process.env.LOG_LEVEL || 'info'}`,
+  dirname: `${process.env.LOG_DIRECTORY || 'logs'}`,
+  datePattern: 'YYYY-MM-DD',
+};
+
+const level = config.service;
 
 // log format
 const logFormat = format.printf((log: any): string => {

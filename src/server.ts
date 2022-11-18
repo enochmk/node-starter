@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
-import configureLogger from './modules/loggers/logger';
+import configureLogger from './modules/loggers/transports/logger';
 import routes from './routes';
 
 // provide access to environmental variables

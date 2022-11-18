@@ -2,13 +2,12 @@
   "name": "starter",
   "version": "1.0.0",
   "description": "A starter express node js application",
-  "main": "src/server.js",
+  "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon",
-    "build": "rimraf ./build && tsc",
-    "start": "npm run build && node -r dotenv/config build/src/index.js",
-    "format": "eslint --fix src && prettier --write src",
-    "prepare": "husky install"
+    "build": "rimraf build && tsc --pretty",
+    "start": "node -r dotenv/config build/src/server.js",
+    "format": "eslint --fix src && prettier --write src"
   },
   "author": "Enoch Klufio",
   "license": "MIT",

@@ -1,11 +1,18 @@
-import config from 'config';
 import rtracer from 'cls-rtracer';
 import winston, { format } from 'winston';
 import 'winston-daily-rotate-file';
 
-const datePattern = config.get('logger.datePattern') as string;
-const dirname = config.get('logger.dirname') as string;
-const level = config.get('logger.level') as string;
+const config = {
+  console: true,
+  service: 'Starter-service',
+  level: `${process.env.LOG_LEVEL || 'info'}`,
+  dirname: `${process.env.LOG_DIRECTORY || 'logs'}`,
+  datePattern: 'YYYY-MM-DD',
+};
+
+const datePattern = config.datePattern;
+const dirname = config.dirname;
+const level = config.level;
 
 // log format
 const logFormat = format.printf((log: any): string => {

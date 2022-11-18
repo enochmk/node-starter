@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "sourceMap": true,
+    "target": "ESNext",
+    "sourceMap": false,
     "outDir": "build",
     "rootDir": ".",
     "strict": true,
@@ -10,6 +10,5 @@
     "moduleResolution": "Node",
     "module": "CommonJS",
     "esModuleInterop": true
-  },
-  "include": ["src/**/*"]
+  }
 }

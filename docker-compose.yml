@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  node_starter:
+    container_name: node_starter
+    image: node-starter
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000

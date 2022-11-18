@@ -1,9 +1,16 @@
-import config from 'config';
 import winston from 'winston';
-import consoleTransport from './transports/consoleTransport';
-import fileTransport from './transports/fileTransport';
+import consoleTransport from './consoleTransport';
+import fileTransport from './fileTransport';
 
-const service: string = config.get('logger.service');
+const config = {
+  console: true,
+  service: 'Starter-service',
+  level: `${process.env.LOG_LEVEL || 'info'}`,
+  dirname: `${process.env.LOG_DIRECTORY || 'logs'}`,
+  datePattern: 'YYYY-MM-DD',
+};
+
+const service = config.service;
 
 // configure transports
 const transports = [consoleTransport, fileTransport];
