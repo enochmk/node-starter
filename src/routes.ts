@@ -1,5 +1,5 @@
 import express from 'express';
-import crudRoute from './routes/testRoute';
+import crudRoute from './routes/route';
 
 const router = express.Router();
 

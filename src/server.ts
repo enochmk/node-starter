@@ -1,22 +1,34 @@
-import dotenv from 'dotenv';
+import config from 'config';
+import http from 'http';
 import express, { Express } from 'express';
-import configureLogger from './modules/loggers/transports/logger';
-import routes from './routes';
+import configureMiddleware from './app/configureMiddleware';
+import configureSocket from './app/configureSocket';
+import { getLogger } from './utils/loggers/logger';
 
-// provide access to environmental variables
-dotenv.config();
-
-const logger = configureLogger('App');
+const PORT = config.get('port') as number;
+const NODE_ENV = config.get('env') as string;
 
 // initialize node application
 const app: Express = express();
-const PORT = process.env.PORT || 3000;
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const logger = getLogger({ label: 'Server' });
 
-// configure middlewares
-app.use(routes);
+const onListening = () => {
+  logger.info(`Server listening in mode: ${NODE_ENV} on port: ${PORT}`);
+};
 
-// start server
-app.listen(PORT, () => {
-  logger.info(`Server running in mode: ${NODE_ENV} on port: ${PORT}`);
-});
+async function startServer() {
+  // configure middlewaresx
+  configureMiddleware(app);
+  const server = http.createServer(app);
+
+  // configure socket
+  configureSocket(server);
+
+  // listen to server
+  server.on('listening', onListening);
+
+  // initiate server
+  server.listen(PORT);
+}
+
+startServer();
