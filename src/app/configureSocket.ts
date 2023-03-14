@@ -2,7 +2,7 @@ import http from 'http';
 import { Server, Socket } from 'socket.io';
 import { getLogger } from '../libs/loggers';
 
-const logger = getLogger({ label: 'Socket' });
+const logger = getLogger('Socket');
 
 const configureSocket = (server: http.Server) => {
   const io = new Server(server, {

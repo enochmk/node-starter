@@ -10,7 +10,7 @@ const NODE_ENV = config.get('env') as string;
 
 // initialize node application
 const app: Express = express();
-const logger = getLogger({ label: 'Server' });
+const logger = getLogger('Server');
 
 const onListening = () => {
   logger.info(`Server listening in mode: ${NODE_ENV} on port: ${PORT}`);
