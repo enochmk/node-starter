@@ -1,6 +1,6 @@
 import http from 'http';
 import { Server, Socket } from 'socket.io';
-import { getLogger } from '../utils/loggers/logger';
+import { getLogger } from '../libs/loggers';
 
 const logger = getLogger({ label: 'Socket' });
 

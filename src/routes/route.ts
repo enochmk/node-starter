@@ -3,6 +3,6 @@ import { testGetController } from '../controllers/controller';
 
 const router = express.Router();
 
-router.route('/api/test').get(testGetController);
+router.route('/').get(testGetController);
 
 export default router;

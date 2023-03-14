@@ -5,19 +5,17 @@ import fileTransport from './transports/file.transport';
 
 const service = config.get('logger.service');
 const transports = [consoleTransport, fileTransport];
+const TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
-interface DefaultMeta {
-  service?: string;
-  label?: string;
-}
-
-export const getLogger = (options: DefaultMeta) => {
+export const getLogger = (label: string) => {
   return winston.createLogger({
     transports: transports,
     levels: winston.config.npm.levels,
-    defaultMeta: options,
+    defaultMeta: {
+      label: label,
+    },
     format: winston.format.combine(
-      winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+      winston.format.timestamp({ format: TIMESTAMP_FORMAT }),
       winston.format.errors({ stack: true }),
     ),
   });
@@ -29,7 +27,7 @@ const logger = winston.createLogger({
   levels: winston.config.npm.levels,
   defaultMeta: { service },
   format: winston.format.combine(
-    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    winston.format.timestamp({ format: TIMESTAMP_FORMAT }),
     winston.format.errors({ stack: true }),
   ),
 });

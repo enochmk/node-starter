@@ -3,7 +3,7 @@ import http from 'http';
 import express, { Express } from 'express';
 import configureMiddleware from './app/configureMiddleware';
 import configureSocket from './app/configureSocket';
-import { getLogger } from './utils/loggers/logger';
+import { getLogger } from './libs/loggers';
 
 const PORT = config.get('port') as number;
 const NODE_ENV = config.get('env') as string;

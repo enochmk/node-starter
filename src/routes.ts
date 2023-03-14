@@ -1,8 +1,8 @@
 import express from 'express';
-import crudRoute from './routes/route';
+import route from './routes/route';
 
 const router = express.Router();
 
-router.use(crudRoute);
+router.use(route);
 
 export default router;

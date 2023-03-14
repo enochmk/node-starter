@@ -4,7 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import hpp from 'hpp';
-// import requestID, { Options } from 'express-request-id';
+import errorHandler from '../middlewares/errorHandler';
 import routes from '../routes';
 
 const corOptions = config.get('corsOptions') as object;
@@ -16,8 +16,8 @@ const configureMiddleware = (app: Application) => {
   app.use(express.json());
   app.use(helmet());
   app.use(hpp());
-  // app.use(requestID());
   app.use('/api', routes);
+  app.use(errorHandler);
 };
 
 export default configureMiddleware;
