@@ -10,7 +10,7 @@ const settings = {
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || 'secret',
   },
   corsOptions: {
-    origin: ['http://localhost:3000'],
+    origin: [`http://localhost:${process.env.PORT || 5000}`],
   },
   logger: {
     console: true,

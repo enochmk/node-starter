@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import config from 'config';
 import http from 'http';
+import rtracer from 'cls-rtracer';
 import { Server, Socket } from 'socket.io';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -22,7 +23,8 @@ export const configureMiddlewares = (app: Application) => {
   app.use(express.json());
   app.use(helmet());
   app.use(hpp());
-  app.use(routes);
+  app.use(rtracer.expressMiddleware());
+  app.use('/api', routes);
   app.use(errorHandler);
 
   logger.info('Configured middleware!');

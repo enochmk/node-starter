@@ -3,8 +3,5 @@
     "tsc-files --noEmit",
     "eslint --fix src",
     "prettier --write src"
-  ],
-  "*.json": [
-    "prettier --write"
   ]
 }
