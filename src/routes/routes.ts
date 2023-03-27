@@ -1,5 +1,6 @@
+import 'express-async-errors';
 import express from 'express';
-import route from './routes/route';
+import route from './main.route';
 
 const router = express.Router();
 
