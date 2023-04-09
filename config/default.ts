@@ -5,6 +5,7 @@ dotenv.config();
 const settings = {
   port: 5000,
   env: 'development',
+  service: process.env.LOG_SERVICE || 'default',
   jwt: {
     accessExpireIn: process.env.TOKEN_EXPIRES_IN || '1h',
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || 'secret',
@@ -15,7 +16,6 @@ const settings = {
   logger: {
     console: true,
     level: 'verbose',
-    service: process.env.LOG_SERVICE || 'default',
     dirname: process.env.LOG_DIRECTORY || 'logs',
     datePattern: 'YYYYMMDD',
   },
