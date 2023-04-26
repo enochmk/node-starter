@@ -16,7 +16,7 @@ const corOptions = config.get('corsOptions') as object;
 // configure middleware
 export const configureMiddlewares = (app: Application) => {
   const logger = getLogger('Middleware');
-  logger.info('Configuring middleware...');
+  logger.verbose('Configuring middleware...');
 
   app.use(morgan('dev'));
   app.use(cors(corOptions));
@@ -27,21 +27,21 @@ export const configureMiddlewares = (app: Application) => {
   app.use('/api', routes);
   app.use(errorHandler);
 
-  logger.info('Configured middleware!');
+  logger.verbose('Configured middleware!');
 };
 
 export const configureSocket = (server: http.Server) => {
   const logger = getLogger('Socket');
-  logger.info('Configuring Socket...');
+  logger.verbose('Configuring Socket...');
 
   const io = new Server(server, {
     cors: { origin: '*' },
   });
 
   io.on('connection', (socket: Socket) => {
-    logger.info('Socket connected!');
+    logger.verbose('Socket connected!');
     socket.emit('connected');
   });
 
-  logger.info('Configured Socket!');
+  logger.verbose('Configured Socket!');
 };

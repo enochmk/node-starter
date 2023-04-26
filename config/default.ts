@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import ip from 'ip';
 
 dotenv.config();
 
@@ -11,11 +12,13 @@ const settings = {
     accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || 'secret',
   },
   corsOptions: {
-    origin: [`http://localhost:${process.env.PORT || 5000}`],
+    corsOptions: {
+      origin: [`http://${ip.address()}:3000`, process.env.ORIGIN || ''],
+    },
   },
   logger: {
     console: true,
-    level: 'verbose',
+    level: 'info',
     dirname: process.env.LOG_DIRECTORY || 'logs',
     datePattern: 'YYYYMMDD',
   },

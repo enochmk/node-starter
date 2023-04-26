@@ -43,7 +43,7 @@ const transporter = {
     format: winston.format.combine(formatter.file),
   }),
   console: new winston.transports.Console({
-    level: LEVEL,
+    level: 'verbose',
     format: winston.format.combine(formatter.console, winston.format.colorize({ all: true })),
   }),
 };
