@@ -48,20 +48,6 @@ const transporter = {
   }),
 };
 
-export const getLogger = (label: string) => {
-  return winston.createLogger({
-    transports: [transporter.console, transporter.file],
-    levels: winston.config.npm.levels,
-    defaultMeta: {
-      label: label,
-    },
-    format: winston.format.combine(
-      winston.format.timestamp({ format: TIMESTAMP_FORMAT }),
-      winston.format.errors({ stack: true }),
-    ),
-  });
-};
-
 const logger = winston.createLogger({
   transports: [transporter.console, transporter.file],
   levels: winston.config.npm.levels,
@@ -72,4 +58,7 @@ const logger = winston.createLogger({
   ),
 });
 
+export const getLogger = (label: string) => {
+  return logger.child({ label });
+};
 export default logger;
