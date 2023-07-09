@@ -1,13 +1,15 @@
 {
+  "ts-node": {
+    "esm": true
+  },
   "compilerOptions": {
-    "target": "ES6",
-    "sourceMap": false,
     "outDir": "build",
     "strict": true,
-    "lib": ["ESNext"],
     "noImplicitAny": true,
+    "lib": ["ES2022"],
+    "target": "ES2022",
+    "module": "ES2022",
     "moduleResolution": "Node",
-    "module": "CommonJS",
     "esModuleInterop": true
   }
 }
