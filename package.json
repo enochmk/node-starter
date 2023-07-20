@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node build/src/index.ts",
     "dev": "nodemon src/index.ts",
-    "build": "rimraf ./build && tsc",
+    "build": "rm -fr ./build && tsc --pretty",
     "format": "eslint --fix src && prettier --write src"
   },
   "dependencies": {
@@ -42,7 +42,6 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.9",
     "@types/request-ip": "^0.0.37",
-    "@types/winston": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.5.0",
