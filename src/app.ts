@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, NextFunction, Request, Response } from 'express';
 import config from 'config';
 import http from 'http';
 import rtracer from 'cls-rtracer';
@@ -10,6 +10,7 @@ import hpp from 'hpp';
 import { getLogger } from './libs/logger';
 import errorHandler from './middlewares/errorHandler.middleware';
 import routes from './routes/routes';
+import requestLoggerMiddleware from './middlewares/requestLogger.middleware';
 
 const corOptions = config.get('corsOptions') as object;
 
@@ -24,6 +25,7 @@ export const configureMiddlewares = (app: Application) => {
   app.use(helmet());
   app.use(hpp());
   app.use(rtracer.expressMiddleware());
+  app.use(requestLoggerMiddleware);
   app.use('/api', routes);
   app.use(errorHandler);
 

@@ -4,7 +4,7 @@ import requestIp from 'request-ip';
 import { RequestHandler } from 'express';
 import { getLogger } from '../libs/logger';
 
-const logger = getLogger('RequestLogger');
+const logger = getLogger('RequestLoggerMiddleware');
 
 const requestLoggerMiddleware: RequestHandler = (req, res, next) => {
   res.locals.requestID = rtracer.id();
@@ -15,13 +15,14 @@ const requestLoggerMiddleware: RequestHandler = (req, res, next) => {
     requestID: res.locals.requestID,
     timestamp: res.locals.timestamp,
     ip: res.locals.clientIp,
-    request: {
-      url: req.originalUrl,
-      headers: req.headers,
-      method: req.method,
-      body: req.body,
+    protocol: req.protocol,
+    url: req.originalUrl,
+    method: req.method,
+    headers: req.headers,
+    data: {
       params: req.params,
       query: req.query,
+      body: req.body,
     },
   };
 
