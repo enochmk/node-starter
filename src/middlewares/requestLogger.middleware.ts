@@ -26,7 +26,7 @@ const requestLoggerMiddleware: RequestHandler = (req, res, next) => {
     },
   };
 
-  logger.info(metadata);
+  logger.info('Request logged', metadata);
   return next();
 };
 
