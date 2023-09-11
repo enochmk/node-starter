@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application } from 'express';
 import config from 'config';
 import http from 'http';
 import rtracer from 'cls-rtracer';
@@ -29,9 +29,10 @@ export const configureMiddlewares = (app: Application) => {
   app.use('/api', routes);
   app.use(errorHandler);
 
-  logger.verbose('Configured middleware!');
+  logger.info('Configured middleware!');
 };
 
+// configure socket
 export const configureSocket = (server: http.Server) => {
   const logger = getLogger('Socket');
   logger.verbose('Configuring Socket...');
@@ -41,9 +42,9 @@ export const configureSocket = (server: http.Server) => {
   });
 
   io.on('connection', (socket: Socket) => {
-    logger.verbose('Socket connected!');
     socket.emit('connected');
+    logger.info('Socket connected!');
   });
 
-  logger.verbose('Configured Socket!');
+  logger.info('Configured Socket!');
 };

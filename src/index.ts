@@ -2,7 +2,7 @@ import config from 'config';
 import http from 'http';
 import express, { Express } from 'express';
 import { getLogger } from './libs/logger';
-import { configureMiddlewares, configureSocket } from './app';
+import { configureMiddlewares } from './app';
 
 const logger = getLogger('Server');
 
@@ -15,9 +15,6 @@ async function initServer() {
   // configure middlewares
   configureMiddlewares(app);
   const server = http.createServer(app);
-
-  // configure socket
-  configureSocket(server);
 
   // listen to server
   server.on('listening', () => {

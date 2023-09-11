@@ -1,92 +1,90 @@
 import { isAxiosError } from 'axios';
-import { ErrorRequestHandler } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { HttpError } from 'http-errors';
+import messages from '../utils/messages';
 import { getLogger } from '../libs/logger';
 
 const logger = getLogger('ErrorHandler');
-const TECHNICAL_ISSUE_MSG = 'Internal Server Error.';
 
 interface ErrorResponse {
   requestTimestamp: string;
   requestID: string;
   message: string;
-  [key: string]: any;
 }
 
 // eslint-disable-next-line
-const errorHandler: ErrorRequestHandler = (error, req, res, _next) => {
+const errorHandler = (error: any, req: Request, res: Response, _next: NextFunction) => {
   let statusCode = 500;
   const response: ErrorResponse = {
     requestID: res.locals.requestID,
     requestTimestamp: res.locals.timestamp,
-    message: TECHNICAL_ISSUE_MSG,
+    message: messages.GENERIC_ERROR,
   };
 
-  // ? handled error
+  const errorLog: any = {
+    requestID: res.locals.requestID,
+    requestTimestamp: res.locals.timestamp,
+    endpoint: {
+      url: req.originalUrl,
+      method: req.method,
+      params: req.params,
+      query: req.query,
+      body: req.body,
+    },
+    response,
+    api: null,
+    error: {
+      name: error.name,
+      code: error.code,
+      status: error.status,
+      message: error.message,
+      stack: null,
+    },
+  };
+
+  // * Handled Error
   if (error instanceof HttpError) {
     statusCode = error.statusCode;
     response.message = error.message;
-    logger.warn({ statusCode, response });
+    errorLog.response = response;
+    logger.warn(response.message, errorLog);
     return res.status(statusCode).json(response);
   }
 
-  // ? an axios error
+  // * Axios Error
   if (isAxiosError(error)) {
-    const axiosErrorLog = {
-      name: error.name,
-      code: error.code,
-      request: {
-        headers: error.config?.headers,
-        baseURL: error.config?.baseURL,
-        url: error.config?.url,
-        method: error.config?.method,
-        data: error.config?.data,
-      },
-      response: {},
-      stack: error.stack,
+    // include API request
+    errorLog.api.request = {
+      baseURL: error.config?.baseURL,
+      url: error.config?.url,
+      method: error.config?.method,
+      data: error.config?.data,
     };
 
-    // ? axios error with response
+    // API Response
     if (error.response) {
-      axiosErrorLog.response = {
+      errorLog.api.response = {
         status: error.response.status,
         data: error.response.data,
       };
-      statusCode = error.response?.status || statusCode;
+
+      // get error message from API response
+      errorLog.error.message = error.response?.data?.message || response.message;
+      logger.warn(errorLog.error.message, errorLog);
+      return res.status(error.response.status).json(error.response.data);
     }
 
-    // ? axios error without response
+    // ! Network error
     if (!error.response) {
-      statusCode = error.status || statusCode;
+      errorLog.api.response = null;
+      logger.error(response.message, errorLog);
+      return res.status(statusCode).json(response);
     }
-
-    logger.warn(axiosErrorLog);
-    return res.status(statusCode).json(response);
   }
 
-  // ! unhandled error
-  const exceptionLog = {
-    message: error.message,
-    request: {
-      ip: res.locals.clientIp,
-      url: req.originalUrl,
-      method: req.method,
-      body: req.body,
-      params: req.params,
-      query: req.query,
-    },
-    response: {
-      statusCode,
-      ...response,
-    },
-    error: {
-      name: error.name,
-      cause: error.cause,
-      stack: error.stack,
-    },
-  };
-
-  logger.error(exceptionLog);
+  // ! Unknown Error. Include stack trace
+  errorLog.error.stack = error.stack;
+  logger.error(error.message, errorLog);
   return res.status(statusCode).json(response);
 };
 
