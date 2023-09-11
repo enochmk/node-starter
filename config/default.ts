@@ -9,7 +9,7 @@ const settings = {
   corsOptions: {},
   logger: {
     console: process.env.LOG_CONSOLE || true,
-    level: process.env.LOG_LEVEL || 'info',
+    level: process.env.LOG_LEVEL || 'verbose',
     dirname: process.env.LOG_DIRECTORY || 'logs',
     datePattern: 'YYYYMMDD',
   },
