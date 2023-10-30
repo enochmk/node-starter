@@ -7,5 +7,5 @@
   "arrowParens": "always",
   "endOfLine": "auto",
   "bracketSpacing": true,
-  "plugins": [ "prettier-plugin-import-sort", "prettier-plugin-tailwindcss",]
+  "plugins": [ "prettier-plugin-import-sort", "prettier-plugin-tailwindcss"]
 }
